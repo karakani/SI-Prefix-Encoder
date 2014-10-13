@@ -3,9 +3,15 @@
 namespace com\karakani\SIPrefixEncoder;
 
 class Encoder {
+	public $keep_below = 10;
+
 	public function encode($integer) {
 		$div = $this->_log10($integer);
 		$suffix = $this->_prefix($div);
+
+		if (pow(10, $div) <= $this->keep_below) {
+			return "$integer";
+		}
 
 		return sprintf('%d%s', $integer / pow(10, $div), $suffix);
 	}
